@@ -29,10 +29,9 @@
 
 
 ## install
+Put files in your app root directory (if file exists, combine them), and run:
+
 ```shell
-git clone https://github.com/brnmonteiro/codekit-gulp.git
-mv codekit-gulp app
-cd app
 npm install --save-dev
 ```
 if error, use *sudo*.
