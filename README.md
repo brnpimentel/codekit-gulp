@@ -54,7 +54,7 @@ To configure, edit file **package.json**.
 ## usage
 For initialize, use:
 ```shell
-gulp
+gulp --silent
 ```
 This command will run **default** task:
 - webserver (port default 5858) task
