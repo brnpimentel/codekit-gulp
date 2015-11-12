@@ -6,9 +6,11 @@
 - JsHint
 - Uglify
 - import js files inside js file (inject/include - inline include):
+
 ⋅⋅⋅In JS file use: ``` //include("bar.js"); ```
 ⋅⋅⋅in this line the content of *bar.js* will be injected
 ⋅⋅⋅when save, will run joshing
+
 - nested imports
 - support for **partials javascript files** (_file.js)
 ⋅⋅⋅these files will not be piped to *dist* folders. These files are imported by others files.
