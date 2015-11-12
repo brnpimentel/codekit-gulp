@@ -3,13 +3,13 @@
 
 ## features
 **JAVASCRIPT**
-* JsHint
+* JSHint
 * Uglify
 * import js files inside js file (inject/include - inline include):
   * mimic the feature on codekit: ``` // @codekit-append "someOtherFile.js"; ```
   * Usage: ``` //include("bar.js"); ```
   * in this line the content of *bar.js* will be injected
-  * when save, will run joshing
+  * when save, will run JSHint
    
 * nested imports
 * support for **partials javascript files** (_file.js)
@@ -55,3 +55,6 @@ gulp
 This command will run **default** task:
 - webserver (port default 5858) task
 - watch task
+
+## TODO
+Code to others languages and others features (help me?)
