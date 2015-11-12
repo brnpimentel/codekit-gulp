@@ -30,6 +30,7 @@
 
 ## install
 ```shell
+git clone https://github.com/brnmonteiro/codekit-gulp.git .
 npm install --save-dev
 ```
 

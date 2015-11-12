@@ -42,6 +42,6 @@
     "through2": "^2.0.0",
     "js-graph-imports": "latest",
     "custom-gulp-sass-inheritance": "latest",
-    "gulp-js-inheritance": "latest",
+    "gulp-js-inheritance": "latest"
   }
 }
