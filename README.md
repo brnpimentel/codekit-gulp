@@ -6,7 +6,8 @@
 * JsHint
 * Uglify
 * import js files inside js file (inject/include - inline include):
-  * In JS file use: ``` //include("bar.js"); ```
+  * mimic the feature on codekit: ``` // @codekit-append "someOtherFile.js"; ```
+  * Usage: ``` //include("bar.js"); ```
   * in this line the content of *bar.js* will be injected
   * when save, will run joshing
    
