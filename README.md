@@ -35,6 +35,7 @@ mv codekit-gulp app
 cd app
 npm install --save-dev
 ```
+if error, use *sudo*.
 
 ## configure
 To configure, edit file **package.json**.
