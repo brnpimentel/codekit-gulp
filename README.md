@@ -5,14 +5,14 @@
 **JAVASCRIPT**
 - JsHint
 - Uglify
--- import js files inside js file (inject/include - inline include):
--- In JS file use: ``` //include("bar.js"); ```
--- in this line the content of *bar.js* will be injected
--- when save, will run joshing
+- import js files inside js file (inject/include - inline include):
+> In JS file use: ``` //include("bar.js"); ```
+> in this line the content of *bar.js* will be injected
+> when save, will run joshing
 - nested imports
 - support for **partials javascript files** (_file.js)
--- these files will not be piped to *dist* folders. These files are imported by others files.
--- when save partial:  scripts run jshint on partial, find all the "imported by" files (parents files),  inject and use uglify on these files
+> these files will not be piped to *dist* folders. These files are imported by others files.
+> when save partial:  scripts run jshint on partial, find all the "imported by" files (parents files),  inject and use uglify on these files
 - compile the necessary files (changed files). If is a partial, or imported, the parents will be processed.
 
 **SASS/SCSS/CSS**
