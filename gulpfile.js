@@ -11,6 +11,7 @@ var filter = require('gulp-filter');
 var data = require('gulp-data');
 var watch = require('gulp-watch');
 var notify = require('gulp-notify');
+var path = require('path');
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
@@ -33,7 +34,6 @@ var _onError = function(err, errorType) {
     })(err);
 
 };
-
 
 
 
@@ -66,7 +66,11 @@ gulp.task('sass', function() {
             console.log(gutil.colors.green('done'));
         }))
         //.pipe(csso())
-        .pipe(gulp.dest(info.scss.dist))
+        .pipe(gulp.dest(function(file) {
+            src = path.resolve(info.scss.folder);
+            final_dist = file.base.replace(src, '');
+            return info.scss.dist + final_dist;
+        }))
         .pipe(web.stream({
             match: '**/*.css'
         }));
@@ -76,7 +80,7 @@ gulp.task('sass', function() {
 
 // > JAVASCRIPT
 gulp.task('js', function() {
-    
+
     return gulp.src(info.js.src)
         .pipe(plumber({
             errorHandler: function(error) {
@@ -86,12 +90,11 @@ gulp.task('js', function() {
         }))
         .pipe(gulpif(global.isWatching, cached('js')))
         .pipe(jsInheritance({
-            dir: info.js.folder
+            dir: info.js.folder,
         }))
         .pipe(jshint())
         .pipe(jshint.reporter(stylish))
         .pipe(jshint.reporter('fail'))
-
         .pipe(filter(function(file) {
             return !/\/_/.test(file.path) || !/^_/.test(file.relative);
         }))
@@ -103,20 +106,22 @@ gulp.task('js', function() {
         .pipe(data(function(file) {
             console.log(gutil.colors.green('done'));
         }))
-        .pipe(gulp.dest(info.js.dist));
+        .pipe(gulp.dest(function(file) {
+            src = path.resolve(info.js.folder);
+            final_dist = file.base.replace(src, '');
+            return info.js.dist + final_dist;
+        }));
 
 });
 
 
-
 // > SERVE WEB
 gulp.task('serve', function() {
-    
+
     gutil.log("[WEBSERVER]\tInitializing");
-    
+
     web.init(info.web);
 
-    
 });
 
 // > UTILS
@@ -145,7 +150,6 @@ gulp.task('watch', ['setWatch', 'setCached'], function() {
 
     gutil.log("[WATCH]\tInitialized");
 });
-
 
 // > DEFAULT TASK
 gulp.task('default', ['serve', 'watch']);

@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "config": {
     "js": {
@@ -23,13 +23,15 @@
     }
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
     "browser-sync": "^2.10.0",
+    "custom-gulp-sass-inheritance": "latest",
+    "gulp": "^3.9.0",
     "gulp-cached": "^1.1.0",
     "gulp-data": "^1.2.0",
     "gulp-filter": "^3.0.1",
     "gulp-if": "^2.0.0",
     "gulp-imports": "0.0.3",
+    "gulp-js-inheritance": "latest",
     "gulp-jshint": "^1.12.0",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.0.1",
@@ -38,10 +40,9 @@
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.5",
     "gutil": "^1.6.4",
-    "jshint-stylish": "^2.0.1",
-    "through2": "^2.0.0",
     "js-graph-imports": "latest",
-    "custom-gulp-sass-inheritance": "latest",
-    "gulp-js-inheritance": "latest"
+    "jshint-stylish": "^2.0.1",
+    "path": "^0.12.7",
+    "through2": "^2.0.0"
   }
 }
