@@ -67,9 +67,7 @@ gulp.task('sass', function() {
         }))
         //.pipe(csso())
         .pipe(gulp.dest(function(file) {
-            src = path.resolve(info.scss.folder);
-            final_dist = file.base.replace(src, '');
-            return info.scss.dist + final_dist;
+            return file.base.replace(path.resolve(info.js.folder), path.resolve(info.js.dist));
         }))
         .pipe(web.stream({
             match: '**/*.css'
@@ -107,9 +105,7 @@ gulp.task('js', function() {
             console.log(gutil.colors.green('done'));
         }))
         .pipe(gulp.dest(function(file) {
-            src = path.resolve(info.js.folder);
-            final_dist = file.base.replace(src, '');
-            return info.js.dist + final_dist;
+            return file.base.replace(path.resolve(info.js.folder), path.resolve(info.js.dist));
         }));
 
 });
