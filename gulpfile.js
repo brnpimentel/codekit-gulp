@@ -24,6 +24,7 @@ info.web = pkg.config.web;
 info.js = pkg.config.js;
 info.scss = pkg.config.scss;
 info.watch = pkg.config.watch;
+info.jshint = pkg.jshintConfig;
 
 var _onError = function(err, errorType) {
     gutil.beep();
@@ -49,7 +50,9 @@ gulp.task('sass', function() {
                 this.emit('end');
             }
         }))
-        .pipe(gulpif(global.isWatching, cached('sass')))
+        .pipe(gulpif(global.isWatching, cached('sass', {
+            optimizeMemory: true
+        })))
         .pipe(sassInheritance({
             dir: info.scss.folder
         }))
@@ -65,9 +68,8 @@ gulp.task('sass', function() {
         .pipe(data(function(file) {
             console.log(gutil.colors.green('done'));
         }))
-        //.pipe(csso())
         .pipe(gulp.dest(function(file) {
-            return file.base.replace(path.resolve(info.js.folder), path.resolve(info.js.dist));
+            return file.base.replace(path.resolve(info.scss.folder), path.resolve(info.scss.dist));
         }))
         .pipe(web.stream({
             match: '**/*.css'
@@ -79,6 +81,7 @@ gulp.task('sass', function() {
 // > JAVASCRIPT
 gulp.task('js', function() {
 
+
     return gulp.src(info.js.src)
         .pipe(plumber({
             errorHandler: function(error) {
@@ -86,13 +89,14 @@ gulp.task('js', function() {
                 this.emit('end');
             }
         }))
-        .pipe(gulpif(global.isWatching, cached('js')))
+        .pipe(gulpif(global.isWatching, cached('js', {
+            optimizeMemory: true
+        })))
         .pipe(jsInheritance({
             dir: info.js.folder,
         }))
-        .pipe(jshint())
+        .pipe(jshint(info.jshint))
         .pipe(jshint.reporter(stylish))
-        .pipe(jshint.reporter('fail'))
         .pipe(filter(function(file) {
             return !/\/_/.test(file.path) || !/^_/.test(file.relative);
         }))
@@ -113,11 +117,8 @@ gulp.task('js', function() {
 
 // > SERVE WEB
 gulp.task('serve', function() {
-
     gutil.log("[WEBSERVER]\tInitializing");
-
     web.init(info.web);
-
 });
 
 // > UTILS
@@ -126,23 +127,42 @@ gulp.task('setWatch', function() {
 });
 
 
-gulp.task('setCached', function() {
-    gutil.log("[CACHED]\tInitialized");
+gulp.task('sassCache', function() {
+    return gulp.src(info.scss.src)
+        .pipe(gulpif(global.isWatching, cached('sass', {
+            optimizeMemory: true
+        }))).
+    on('end', function() {
+        gutil.log("[SASS]\tCached");
+    });
 
-    gulp.src(info.scss.src)
-        .pipe(gulpif(global.isWatching, cached('sass')));
+});
 
-    gulp.src(info.js.src)
-        .pipe(gulpif(global.isWatching, cached('js')));
+gulp.task('jsCache', function() {
+
+    return gulp.src(info.js.src)
+        .pipe(gulpif(global.isWatching, cached('js', {
+            optimizeMemory: true
+        }))).
+    on('end', function() {
+        gutil.log("[JS]\t\tCached");
+    });
 
 });
 
 // > WATCH
-gulp.task('watch', ['setWatch', 'setCached'], function() {
+gulp.task('watch', ['setWatch', 'jsCache', 'sassCache'], function() {
 
-    gulp.watch(info.scss.src, ['sass']);
-    gulp.watch(info.js.src, ['js']);
-    gulp.watch([info.watch.reload, info.js.dist + '/**/*.js']).on('change', web.reload);
+    watch(info.scss.src, function(file) {
+        gulp.start('sass');
+    });
+    watch(info.js.src, function() {
+        gulp.start('js');
+        web.reload();
+    });
+    watch(info.watch.reload, function() {
+        web.reload();
+    });
 
     gutil.log("[WATCH]\tInitialized");
 });

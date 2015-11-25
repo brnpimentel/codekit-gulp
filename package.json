@@ -1,7 +1,4 @@
 {
-  "name": "app",
-  "version": "1.0.1",
-  "description": "",
   "config": {
     "js": {
       "folder": "./js",
@@ -16,12 +13,17 @@
     },
     "web": {
       "server": "./public",
-      "port": "5858"
+      "port": "5858",
+      "open": false
     },
     "watch": {
       "reload": "./**/*.{html,php,jpg,png,gif}"
+    },
+     "jshintConfig": {
+        
     }
   },
+
   "devDependencies": {
     "browser-sync": "^2.10.0",
     "custom-gulp-sass-inheritance": "latest",
